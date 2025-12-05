@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>first sait</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="style.css">
     <link rel="icon" href="images/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,7 +28,7 @@
           <a class="header__list-link" href="/">Blog</a>
         </li>
       </ul>
-      <a class="header__button" href="/">Get Started</a>
+      <button class="header_button" id="headerGetStarted">Login</button>
     </nav>
   </div>
  </header>
@@ -157,5 +157,98 @@
      </section>
    </section>
  </main>
+    <header>
+      <h2 class="logo"></h2>
+    </header>
+    <!-- Модальное окно регистрации -->
+    <div id="registrationModal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeModalBtn">&times;</span>
+            <h2>Create Your Account</h2>
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" placeholder="your.email@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="At least 8 characters" required>
+                </div>
+                <button type="submit" class="submit-btn">Start Free Trial</button>
+                <p class="terms">By clicking "Start Free Trial", you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript код для работы модального окна
+        document.addEventListener('DOMContentLoaded', function() {
+            // Получаем элементы
+            const headerBtn = document.getElementById('headerGetStarted');
+            const heroBtn = document.getElementById('heroGetStarted');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const modal = document.getElementById('registrationModal');
+            const form = document.getElementById('registrationForm');
+
+            // Функция открытия модального окна
+            function openModal() {
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            // Функция закрытия модального окна
+            function closeModal() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+
+            // Открыть модальное окно при клике на кнопки
+            if (headerBtn) headerBtn.addEventListener('click', openModal);
+            if (heroBtn) heroBtn.addEventListener('click', openModal);
+            
+            // Закрыть модальное окно
+            if (closeModalBtn) closeModalBtn.addEventListener('click', closeModal);
+
+            // Закрыть при клике вне окна
+            window.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModal();
+                }
+            });
+
+            // Закрыть по клавише Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape' && modal.style.display === 'flex') {
+                    closeModal();
+                }
+            });
+
+            // Обработка формы
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    
+                    // Собираем данные формы
+                    const formData = {
+                        name: document.getElementById('name').value,
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value
+                    };
+                    
+                    // Здесь будет отправка на сервер
+                    console.log('Registration data:', formData);
+                    
+                    // Сообщение пользователю
+                    alert('Thank you for registering! Check your email to confirm your account.');
+                    closeModal();
+                    form.reset();
+                });
+            }
+        });
+    </script>
   </body>
   </html>
